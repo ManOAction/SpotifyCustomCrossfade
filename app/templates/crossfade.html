@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Crossfit Crossfader</h1>
+    <p><a class="btn btn-info btn-lg" href="/" role="button">Back To Index</a></p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>        
+        <tr>
+          <td><a class="btn btn-info btn-lg" href="/playlistplay/1" role="button">Begin Playlist #1</a></td>
+          <td><a class="btn btn-info btn-lg" href="/crossfade/authorize" role="button">Request Authorization</a></td>
+        </tr>        
+      </tbody>
+    </table>   
+  </div>
+  {% endblock content %}
