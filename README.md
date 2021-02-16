@@ -13,9 +13,10 @@ This is helping how bootstrap works: https://getbootstrap.com/docs/3.4/css/
 2/14/21 - We've got basic authorizaiton and the spotify API working from their excellent documentation.  Time to start on the Flask App.  We're revisiting this guy https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world to get us off the ground.
 
 
+# Misc Info
+We're hosting it in /srv/www
 
-
-Install and Dependencies
+# Install and Dependencies
 
 cd /d G:\My Drive\Repos\SpotifyCustomCrossfade\
 
