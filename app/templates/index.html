@@ -1,21 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Crossfit Crossfader Spotify Tools</h1>    
-    <p>Pick from your tools below.</p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nav Options</th>          
-        </tr>
-      </thead>
-      <tbody>        
-        <tr>          
-          <td><a class="btn btn-info btn-lg" href="/crossfade" role="button">Spotify Crossfader</a></td>
-          <td><a class="btn btn-info btn-lg" href="/freqhits" role="button">Old Underwear Playlist Maker</a></td>
-        </tr>        
-      </tbody>
-    </table>
+<!-- Masthead-->
+<header class="masthead">
+  <div class="container d-flex h-100 align-items-center">
+      <div class="mx-auto text-center">
+          <h1 class="mx-auto my-0 text-uppercase">Crossfit Crossfader</h1>
+          <h2 class="text-white-50 mx-auto mt-2 mb-5">A couple tools to make your spotify playlists better.</h2>
+          <a class="btn btn-primary js-scroll-trigger" href="/crossfade">&nbsp;&nbsp;&nbsp;Crossfader&nbsp;&nbsp;&nbsp;</a><br /><br />
+          <a class="btn btn-primary js-scroll-trigger" href="#about">About</a>&nbsp;&nbsp;&nbsp;          
+          <a class="btn btn-primary js-scroll-trigger" href="/freqhits">Old Underwear</a>
+          <br /><br /><a class="btn btn-primary js-scroll-trigger" href="/flashtest">Flash Test</a>
+      </div>
   </div>
+</header>
+<!-- About-->
+<section class="about-section text-center" id="about">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 mx-auto">
+              <h2 class="text-white mb-4">Why is this here?</h2>
+              <p class="text-white-50">
+                  Not much to say right now.  It plays work out playlists.  That is all.
+              </p>
+          </div>
+      </div>
+      <img class="img-fluid" src="{{ url_for('static', filename='assets/img/ipad.png') }}" alt="" />
+  </div>
+</section>
   {% endblock content %}
