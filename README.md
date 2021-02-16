@@ -56,13 +56,17 @@ The main things I want to learn are Oath 2.0 authorizations with tokens, relearn
 
 ## Roadmap and Goals
 
-Host on Elastic Beanstalk or other PaaS rather than Lightsail.
-
-Clean away CRUD portions (different branch?)
-
 Multiple Playlists
 
 Threaded or some version that doesn't use sleep()
+
+Bring Back CRUD to store user playlists (maybe loaded by csv)
+
+# Done in recency
+2/15 - Clean away CRUD portions (different branch?)
+2/15 - Host on Elastic Beanstalk or other PaaS rather than Lightsail.
+
+
 
 ## Diary and Misc Notes
 

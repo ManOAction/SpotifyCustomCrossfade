@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, make_response
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 from urllib.parse import urlencode
@@ -8,65 +7,25 @@ from urllib.parse import urlencode
 from CustomCrossfade import CustomCrossfade
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app_db.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
 application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
-class Grocery(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False,
-                           default=datetime.utcnow)
-
-    def __repr__(self):
-        return '<Grocery %r>' % self.name
 
 # Home Route
 ############################################################################
 @app.route('/')
 def index():
     
-        return render_template('index.html', title='WebApp Home')
+        return render_template('index.html', title='Crossfit Crossfader Home')
 
 
-# CRUD Routes
+# Playlist Maker Routes
 ###########################################################################
 
-@app.route('/crud/', methods=['GET', 'POST'])
-def crudhome():
-    if request.method == 'POST':
-        name = request.form['name']
-        new_stuff = Grocery(name=name)
+@app.route('/freqhits') # , methods=['GET', 'POST'])
+def freqhits():
 
-        try:
-            db.session.add(new_stuff)
-            db.session.commit()
-            return redirect('/crud/')
-        except:
-            return "There was a problem adding new stuff."
-
-    else:
-        groceries = Grocery.query.order_by(Grocery.created_at).all()
-        return render_template('crudhome.html', groceries=groceries, title='CRUD Home')
-
-@app.route('/crud/delete/<int:id>')
-def delete(id):
-    grocery = Grocery.query.get_or_404(id)
-
-    try:
-        db.session.delete(grocery)
-        db.session.commit()
-        return redirect('/crud/')
-    except:
-        return "There was a problem deleting data."
-
-
-@app.route('/hello')
-def hello():    
-    return render_template('index.html', title='Hello Style Title')
-
+    return render_template('freqhits.html', title='Frequency Hits Playlist Maker')
 
 
 # Crossfrade Routes
@@ -120,7 +79,7 @@ def playlistplay(ListId):
 @app.route('/crossfade/authorize')
 def authorize():
     client_id = CustomCrossfade.clientId
-    redirect_uri = 'http://127.0.0.1:5000/crossfade/callback/'    
+    redirect_uri = 'http://www.crossfitcrossfader.com/crossfade/callback/'    
     scope = 'user-read-private user-read-email user-modify-playback-state'
 
     authorize_url = 'https://accounts.spotify.com/en/authorize?'
@@ -136,7 +95,7 @@ def authorize():
 def get_data():
     CustomCrossfade.code = request.args.get("code")
 
-    redirect_uri = 'http://127.0.0.1:5000/crossfade/callback/'
+    redirect_uri = 'http://www.crossfitcrossfader.com/crossfade/callback/'
 
     response = CustomCrossfade.GetTokensFromCode(CustomCrossfade.authStr, CustomCrossfade.code, redirect_uri)
     print(response.status_code)
