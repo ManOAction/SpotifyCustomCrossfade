@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, make_response
+from flask import Flask, render_template, request, redirect, make_response, session
 from datetime import datetime
+from flask.ext.session import Session
 
 from urllib.parse import urlencode
 
@@ -7,6 +8,10 @@ from urllib.parse import urlencode
 from CustomCrossfade import CustomCrossfade
 
 app = Flask(__name__)
+
+SESSION_TYPE = 'redis'
+app.config.from_object(__name__)
+Session(app)
 
 application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
@@ -41,35 +46,32 @@ def crossfade():
 def playlistplay(ListId):
 
     x = ListId
-
-    token = CustomCrossfade.token
-    refreshtoken = CustomCrossfade.refreshtoken
-
+    
     try:
-        token = CustomCrossfade.GetNewAccessToken(refreshtoken)
+        session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
 
     except:
         return redirect('/crossfade/authorize')
     
     for Song in CustomCrossfade.SongList:
         print('Adding a song to up next.')
-        token = CustomCrossfade.GetNewAccessToken(refreshtoken)
-        CustomCrossfade.AddSongToQueue(Song[0], token)
+        session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
+        CustomCrossfade.AddSongToQueue(Song[0], session.get('token', 'not set'))
         print('Song Added')
 
     print('Skipping to next song.')
-    token = CustomCrossfade.GetNewAccessToken(refreshtoken)
-    CustomCrossfade.SkipToNextSong(token)
+    session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
+    CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))
 
     for Song in CustomCrossfade.SongList:
         if int(Song[1]) > 0:
             print(f'Skipping to {Song[1]}')
-            token = CustomCrossfade.GetNewAccessToken(refreshtoken)
-            CustomCrossfade.SeekToTime(Song[1], token)    
+            session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
+            CustomCrossfade.SeekToTime(Song[1], session.get('token', 'not set'))    
         print(f'Sleeping for {Song[2]}')
         CustomCrossfade.sleep(int(Song[2]))
-        token = CustomCrossfade.GetNewAccessToken(refreshtoken)
-        CustomCrossfade.SkipToNextSong(token)
+        session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
+        CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))
 
     return redirect('/crossfade')
 
@@ -91,7 +93,7 @@ def authorize():
 
 @app.route("/crossfade/callback/")
 def get_data():
-    CustomCrossfade.code = request.args.get("code")
+    session['code'] = request.args.get("code")
 
     redirect_uri = 'http://www.crossfitcrossfader.com/crossfade/callback/'
 
@@ -100,8 +102,8 @@ def get_data():
     print(response.content)
 
 
-    CustomCrossfade.token = response.json()['access_token']
-    CustomCrossfade.refreshtoken = response.json()['refresh_token']
+    session['token'] = response.json()['access_token']
+    session['refreshtoken'] = response.json()['refresh_token']
 
     return redirect('/crossfade')
 
