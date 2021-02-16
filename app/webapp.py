@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, make_response, session
+from flask import Flask, render_template, request, redirect, make_response, session, flash
 from urllib.parse import urlencode
 
 # Custom Imports
@@ -6,6 +6,7 @@ from CustomCrossfade import CustomCrossfade
 
 app = Flask(__name__)
 
+app.secret_key = b'nIe8c&Z*coP!DKm2gqZf' # Messing around with flash messaging.
 
 application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
@@ -29,6 +30,13 @@ def freqhits():
 
 # Crossfrade Routes
 ###########################################################################
+
+@app.route('/flashtest')
+def flashtest():
+    flash('You\'ve been flashed.')
+
+    return redirect('/')
+
 
 @app.route('/crossfade')
 def crossfade():
