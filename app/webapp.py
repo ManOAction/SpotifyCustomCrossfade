@@ -50,9 +50,7 @@ def playlistplay(ListId):
 
     except:
         return redirect('/crossfade/authorize')
-
-    render_template('crossfade_playing.html', title='Crossfit Crossfader Home')
-
+    
     for Song in CustomCrossfade.SongList:
         print('Adding a song to up next.')
         token = CustomCrossfade.GetNewAccessToken(refreshtoken)
