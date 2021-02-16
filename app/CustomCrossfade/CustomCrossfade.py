@@ -12,16 +12,17 @@ import requests
 import toml
 
 # Project Imports
-secrets = toml.load('secrets.toml')
+secrets = toml.load('CustomCrossfade/secrets.toml')
 
 # Constants
 clientId = secrets['ClientInfo']['clientId']
 clientSecret = secrets['ClientInfo']['clientSecret']
 
 # Loading Old Token
-with open('oldtoken.txt', 'r') as reader:
+with open('CustomCrossfade/oldtoken.txt', 'r') as reader:
     refreshtoken = reader.read()
 reader.close()
+
 
 # https://accounts.spotify.com/authorize?client_id=e35e8d9e13754f3389657a3ded64b4ea&response_type=code&redirect_uri=https%3A%2F%2Fwintermindgroup.com%2F&scope=user-read-private%20user-read-email%20user-modify-playback-state
 code = 'AQA8D2oGd31yechZ06IjvEDD3pRVw5c5TiH4XFKFj2lxDecFLdOW8iD02XK4Sdoykr_C20Eyvhry20tCWtVCART9E0H57WR-OVeV6obho5TfvFvRGTr0G5EKqP45bs0ydu9mJRUozcR7TVUfuAGQ_i5Tbd-XTj0Bg90kQf9VF-5ek2zwjzhwZ_4zSU5w9GjmApMp6AokfO3p5JncGPq3KWkdRTk'
@@ -83,13 +84,17 @@ def GetNewAccessToken(RefreshToken):
     'refresh_token': f'{RefreshToken}'
     }
 
+    print('Getting new access token.')
     response = requests.post(url, headers=headers, data=data)
+    print(response.status_code)
+    print(response.content)
 
     return response.json()['access_token']
 
 
+
 # Adding song to queue. user-modify-playback-state
-def AddSongToQueue(SpotURI):
+def AddSongToQueue(SpotURI, token):
 
     headers = {
         'Accept' : 'application/json',
@@ -112,7 +117,7 @@ def AddSongToQueue(SpotURI):
 
 
 # Adding song to queue. user-modify-playback-state
-def SkipToNextSong():
+def SkipToNextSong(token):
 
     headers = {
         'Accept' : 'application/json',
@@ -130,7 +135,7 @@ def SkipToNextSong():
     return True
 
 # Skip to spot in track. user-modify-playback-state
-def SeekToTime(TimeMS):
+def SeekToTime(TimeMS, token):
 
     url = f'https://api.spotify.com/v1/me/player/seek?position_ms={TimeMS}'
 
@@ -160,41 +165,41 @@ authStr = strToBase64(f'{clientId}:{clientSecret}')
 RedirectURI = 'https://wintermindgroup.com/'
 
 
-print('Did you need a new token? (y/n)')
-UserInput = input()
+def playlistplay():
 
-if UserInput == 'y':
-    print('Gimme that auth code:')
-    code = input()
-    print('Grabbing new token.')
-    response = GetTokensFromCode(authStr, code, RedirectURI)
-    token = response.json()['access_token']
-    refreshtoken = response.json()['refresh_token']
-    with open('oldtoken.txt', 'w') as writer:
-        writer.write(refreshtoken)
-    writer.close()
-
-# Adding Songs to Queue
-for Song in SongList:
-    print('Adding a song to up next.')
-    token = GetNewAccessToken(refreshtoken)
-    AddSongToQueue(Song[0])
-    print('Song Added')
-
-print('Skipping to next song.')
-token = GetNewAccessToken(refreshtoken)
-SkipToNextSong()
-
-for Song in SongList:
-    if int(Song[1]) > 0:
-        print(f'Skipping to {Song[1]}')
+    try:
+        with open('CustomCrossfade/oldtoken.txt', 'r') as reader:
+            refreshtoken = reader.read()
+            reader.close()
         token = GetNewAccessToken(refreshtoken)
-        SeekToTime(Song[1])    
-    print(f'Sleeping for {Song[2]}')
-    sleep(int(Song[2]))
+    except:
+        code = GetNewCode()
+        response = GetTokensFromCode(authStr, code, RedirectURI)
+
+        token = response.json()['access_token']
+        refreshtoken = response.json()['refresh_token']
+
+        with open('CustomCrossfade/oldtoken.txt', 'w') as writer:
+            writer.write(refreshtoken)
+        writer.close()
+
+    # Adding Songs to Queue
+    for Song in SongList:
+        print('Adding a song to up next.')
+        token = GetNewAccessToken(refreshtoken)
+        AddSongToQueue(Song[0], token)
+        print('Song Added')
+
+    print('Skipping to next song.')
     token = GetNewAccessToken(refreshtoken)
-    SkipToNextSong()
+    SkipToNextSong(token)
 
-
-
-print('All Done.')
+    for Song in SongList:
+        if int(Song[1]) > 0:
+            print(f'Skipping to {Song[1]}')
+            token = GetNewAccessToken(refreshtoken)
+            SeekToTime(Song[1], token)    
+        print(f'Sleeping for {Song[2]}')
+        sleep(int(Song[2]))
+        token = GetNewAccessToken(refreshtoken)
+        SkipToNextSong(token)
