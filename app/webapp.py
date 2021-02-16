@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app_db.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
 class Grocery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
