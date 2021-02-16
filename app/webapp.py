@@ -30,11 +30,6 @@ def index():
         return render_template('index.html', title='WebApp Home')
 
 
-if __name__ == "__main__":
-    app.debug = True
-    app.run(host='0.0.0.0')
-
-
 # CRUD Routes
 ###########################################################################
 
@@ -151,3 +146,10 @@ def get_data():
     CustomCrossfade.refreshtoken = response.json()['refresh_token']
 
     return redirect('/crossfade')
+
+
+# Starting the App
+##########################################################
+if __name__ == "__main__":
+    app.debug = True
+    app.run(host='0.0.0.0')
