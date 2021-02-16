@@ -1,20 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Crossfit Crossfader</h1>
-    <p><a class="btn btn-info btn-lg" href="/" role="button">Back To Index</a>&nbsp;&nbsp;<a class="btn btn-danger btn-lg" href="/crossfade/authorize" role="button">Request Authorization</a></p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>        
-        <tr>
-          <td><a class="btn btn-info btn-lg" href="/playlistplay/1" role="button">Begin Garage Revival Test Playlist</a></td>          
-        </tr>        
-      </tbody>
-    </table>   
+
+<!-- Masthead-->
+<header class="masthead">
+  <div class="container d-flex h-100 align-items-center">
+      <div class="mx-auto text-center">
+          <h1 class="mx-auto my-0 text-uppercase">Crossfit Crossfader</h1>
+          <h2 class="text-white-50 mx-auto mt-2 mb-5">Make sure Spotify is already playing, then click authorize (you may be asked to login), then click a playlist to play.</h2>
+          <a class="btn btn-danger js-scroll-trigger" href="/crossfade/authorize">Authorize the App</a>&nbsp;&nbsp;&nbsp;
+          <a class="btn btn-primary js-scroll-trigger" href="/playlistplay/1">Garage Mix #1</a>          
+      </div>
   </div>
-  {% endblock content %}
+</header>
+{% endblock content %}

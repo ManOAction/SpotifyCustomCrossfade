@@ -1,7 +1,4 @@
 from flask import Flask, render_template, request, redirect, make_response, session
-from datetime import datetime
-from flask.ext.session import Session
-
 from urllib.parse import urlencode
 
 # Custom Imports
@@ -9,9 +6,6 @@ from CustomCrossfade import CustomCrossfade
 
 app = Flask(__name__)
 
-SESSION_TYPE = 'redis'
-app.config.from_object(__name__)
-Session(app)
 
 application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
@@ -112,4 +106,4 @@ def get_data():
 ##########################################################
 if __name__ == "__main__":
     app.debug = False
-    app.run(host='0.0.0.0')
+    app.run()
