@@ -81,7 +81,9 @@ def flashtest():
 @app.route('/crossfade')
 def crossfade():
 
-    return render_template('crossfade.html', title='Crossfit Crossfader Home')
+    playlists = CustomCrossfade.Playlists        
+
+    return render_template('crossfade.html', title='Crossfit Crossfader Home', playlists=playlists)
 
 
 @app.route('/playlistplay/<int:ListId>')

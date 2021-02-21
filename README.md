@@ -68,6 +68,12 @@ Bring Back CRUD to store user playlists (maybe loaded by csv)
 
 ## Diary and Misc Notes
 
+2/20/21 - Finally got threadded playing of playlists up and going.  Quick bootstrap skin.  Time to start working on multiple playlists and playlist uploading.
+  We're using this for variable control in the href of the templates  
+  ```html
+  <a href="{{ '/view_assessment_result/%s'%a.id|urlencode }}">{{ a.id }}</a>
+  ```
+
 2/15/21 - Using this as well https://medium.com/technest/build-a-crud-app-with-flask-bootstrap-heroku-60dfa3a788e8
 
 This is helping how bootstrap works: https://getbootstrap.com/docs/3.4/css/
