@@ -12,29 +12,29 @@ import requests
 import toml
 
 # Project Imports
-secrets = toml.load('CustomCrossfade/secrets.toml')
+config = toml.load('CustomCrossfade/config.toml')
 
 # Constants
-clientId = secrets['ClientInfo']['clientId']
-clientSecret = secrets['ClientInfo']['clientSecret']
-
-# Loading Old Token
-with open('CustomCrossfade/oldtoken.txt', 'r') as reader:
-    refreshtoken = reader.read()
-reader.close()
+clientId = config['ClientInfo']['clientId']
+clientSecret = config['ClientInfo']['clientSecret']
 
 
-# https://accounts.spotify.com/authorize?client_id=e35e8d9e13754f3389657a3ded64b4ea&response_type=code&redirect_uri=https%3A%2F%2Fwintermindgroup.com%2F&scope=user-read-private%20user-read-email%20user-modify-playback-state
-code = 'AQA8D2oGd31yechZ06IjvEDD3pRVw5c5TiH4XFKFj2lxDecFLdOW8iD02XK4Sdoykr_C20Eyvhry20tCWtVCART9E0H57WR-OVeV6obho5TfvFvRGTr0G5EKqP45bs0ydu9mJRUozcR7TVUfuAGQ_i5Tbd-XTj0Bg90kQf9VF-5ek2zwjzhwZ_4zSU5w9GjmApMp6AokfO3p5JncGPq3KWkdRTk'
-token = 'BQBv8gAgd5C5J1-dH3tfBPofWQFIUHNwFbDNTdAibQWhgwCAbcc4VrxabjifUPXcH3CAarZ5fOwkjBITuDdlV2Cvw_fMNmL4guFRpj4FcyVS7RtTVVvCbZSHJKY9nObhB_MCY1rvjyIUJyCbysZlbPOvl9qOfdD53Q'
+# Playlist Key, Playlist Name, List of Songs [SpotifyURI, JustTo, Wait]
+Playlists = [
+                ['Garage Revival', [
+                    ['spotify:track:0YPDp1KIxVLTdh3vnvk6wd', '11000', '10'], 
+                    ['spotify:track:1JcGNoiwifg0MdJMVgJQYx', '0', '10'], 
+                    ['spotify:track:6tedQ1ZmbygqhbdcfJL7Xb', '9000', '5']
+                                        ]
+                ],
 
-# Song List [URI, Skip, Wait]
-
-SongList = [
-    ['spotify:track:0YPDp1KIxVLTdh3vnvk6wd', '11000', '20'], 
-    ['spotify:track:1JcGNoiwifg0MdJMVgJQYx', '0', '30'],
-    ['spotify:track:6tedQ1ZmbygqhbdcfJL7Xb', '9000', '21']
-        ]
+                ['The Who Mix', [
+                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
+                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
+                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
+                                ]
+                ]            
+            ]
 
 
 # Functions
@@ -48,6 +48,7 @@ def strToBase64(StrToConvert):
 
     return StrConverted
 
+authStr = strToBase64(f'{clientId}:{clientSecret}')
 
 # Get token from code
 def GetTokensFromCode(authStr, code, RedirectURI):
@@ -84,10 +85,10 @@ def GetNewAccessToken(RefreshToken):
     'refresh_token': f'{RefreshToken}'
     }
 
-    print('Getting new access token.')
+    # print('Getting new access token.')
     response = requests.post(url, headers=headers, data=data)
-    print(response.status_code)
-    print(response.content)
+    # print(response.status_code)
+    # print(response.content)
 
     return response.json()['access_token']
 
@@ -148,8 +149,6 @@ def SeekToTime(TimeMS, token):
     print(url)
 
     response = requests.put(url=url, headers=headers)
-    # print(response.status_code)
-    # print(response.content)
 
     try:
         print(json.dumps(response.json(), indent=2))
@@ -157,49 +156,3 @@ def SeekToTime(TimeMS, token):
         None
 
     return True
-
-
-
-
-authStr = strToBase64(f'{clientId}:{clientSecret}')
-RedirectURI = 'https://wintermindgroup.com/'
-
-
-def playlistplay():
-
-    try:
-        with open('CustomCrossfade/oldtoken.txt', 'r') as reader:
-            refreshtoken = reader.read()
-            reader.close()
-        token = GetNewAccessToken(refreshtoken)
-    except:
-        code = GetNewCode()
-        response = GetTokensFromCode(authStr, code, RedirectURI)
-
-        token = response.json()['access_token']
-        refreshtoken = response.json()['refresh_token']
-
-        with open('CustomCrossfade/oldtoken.txt', 'w') as writer:
-            writer.write(refreshtoken)
-        writer.close()
-
-    # Adding Songs to Queue
-    for Song in SongList:
-        print('Adding a song to up next.')
-        token = GetNewAccessToken(refreshtoken)
-        AddSongToQueue(Song[0], token)
-        print('Song Added')
-
-    print('Skipping to next song.')
-    token = GetNewAccessToken(refreshtoken)
-    SkipToNextSong(token)
-
-    for Song in SongList:
-        if int(Song[1]) > 0:
-            print(f'Skipping to {Song[1]}')
-            token = GetNewAccessToken(refreshtoken)
-            SeekToTime(Song[1], token)    
-        print(f'Sleeping for {Song[2]}')
-        sleep(int(Song[2]))
-        token = GetNewAccessToken(refreshtoken)
-        SkipToNextSong(token)

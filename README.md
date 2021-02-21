@@ -45,16 +45,11 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT License ](https://choosealicense.com/licenses/mit/)
+A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
 
 
-Crossfit Crossfade for Spotify
-
-This is another learning project for me.  The goal being to create a spotify playlist with custom song entrances and exits for a workout.
-
-The main things I want to learn are Oath 2.0 authorizations with tokens, relearn Flask for small web apps, AWS for hosting flask apps, and finally commit to venv virtual enviroments.
-
-## Roadmap and Goals
+# Roadmap and Goals
 
 Multiple Playlists
 
@@ -62,7 +57,10 @@ Threaded or some version that doesn't use sleep()
 
 Bring Back CRUD to store user playlists (maybe loaded by csv)
 
-# Done in recency
+
+## Done Recently
+2/16 - Security update and session tokens
+2/16 - Unnecessary bootstrap facelift
 2/15 - Clean away CRUD portions (different branch?)
 2/15 - Host on Elastic Beanstalk or other PaaS rather than Lightsail.
 
@@ -76,15 +74,12 @@ This is helping how bootstrap works: https://getbootstrap.com/docs/3.4/css/
 
 2/14/21 - We've got basic authorizaiton and the spotify API working from their excellent documentation.  Time to start on the Flask App.  We're revisiting this guy https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world to get us off the ground.
 
-# Misc Info
-We're hosting it in /srv/www
-
-# Migrating Works Like This
+## Migrating Works Like This
 (Source Machine) pip freeze > requirements.txt
 Copy requirements.txt to Target Machine
 (Target Machine Venv) pip install -r requirements.txt
 
-# Vestigal Notes about CRUD Stuff
+## Vestigal Notes about CRUD Stuff
 This was great, but just not really related to what we're doing.  Come back when you're wanting to learn more about SQL Alchemy, SQLLite, and the like.
 https://medium.com/technest/build-a-crud-app-with-flask-bootstrap-heroku-60dfa3a788e8
 

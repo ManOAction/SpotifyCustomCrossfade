@@ -1,0 +1,8 @@
+
+title = "Spotify Custom Crossfade App Secrets"
+
+# Spotify Secrets
+[ClientInfo]
+    clientId = "e35e8d9e13754f3389657a3ded64b4ea"
+    clientSecret = "fe8a8d13db6248d9a33ca322cf758015"
+
