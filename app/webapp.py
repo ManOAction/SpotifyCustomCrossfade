@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, make_response, session, flash
+from flask import Flask, render_template, request, redirect, make_response, session, flash, copy_current_request_context
 from urllib.parse import urlencode
 import threading
 
@@ -30,7 +30,8 @@ def player(ListId):
 
     flash(f'Player loop beginning for Playlist {CustomCrossfade.Playlists[ListId][0]}.')
 
-    render_template('crossfade.html', title='Crossfit Crossfader Home')    
+    render_template('crossfade.html', title='Crossfit Crossfader Home')   
+    
 
     for Song in CustomCrossfade.Playlists[ListId][1]:
         print('Adding a song to up next.')
@@ -85,19 +86,44 @@ def crossfade():
 
 @app.route('/playlistplay/<int:ListId>')
 def playlistplay(ListId):    
-    
+
+    @copy_current_request_context
+    def player(ListId):                          
+
+        for Song in CustomCrossfade.Playlists[ListId][1]:
+            print('Adding a song to up next.')
+            session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
+            CustomCrossfade.AddSongToQueue(Song[0], session.get('token', 'not set'))
+            print('Song Added')
+
+        print('Skipping to next song.')
+        session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
+        CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))
+
+        for Song in CustomCrossfade.Playlists[ListId][1]:
+            if int(Song[1]) > 0:
+                print(f'Skipping to {Song[1]}')
+                session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
+                CustomCrossfade.SeekToTime(Song[1], session.get('token', 'not set'))    
+            print(f'Sleeping for {Song[2]}')
+            CustomCrossfade.sleep(int(Song[2]))
+            session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
+            CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))        
+
+        return True
+
     try:
         session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))    
     
     except Exception as errmsg:
         print(errmsg)        
         flash('We need to get you authorized.')
-        return redirect('/crossfade/authorize')
+        return redirect('/crossfade/authorize')  
 
-    # x = threading.Thread(target=player, args=(ListId,)) 
-    # x.start()       
-    
-    player(ListId)
+    ListId -= 1         
+
+    x = threading.Thread(target=player, args=(ListId,)) 
+    x.start() 
 
     return redirect('/crossfade')
 
