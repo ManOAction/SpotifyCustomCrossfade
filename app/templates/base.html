@@ -37,9 +37,10 @@
                   <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/crossfade">Crossfade</a></li>
                   <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/freqhits">Old Underwear</a></li>
               </ul>
-          </div>
+          </div>          
           {% with messages = get_flashed_messages() %}
             {% if messages %}
+                <br /><br />
                 <ul class=flashes>
                 {% for message in messages %}
                 <li>{{ message }}</li>
