@@ -33,6 +33,59 @@ Playlists = [
                     ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
                     ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
                                 ]
+                ],
+
+                ['MetCon', [
+                    ['spotify:track:1JcGNoiwifg0MdJMVgJQYx','0','80'],
+                    ['spotify:track:0YPDp1KIxVLTdh3vnvk6wd','11000','105'],
+                    ['spotify:track:2VHfyWLlvCvbkIqtS5tqt3','8000','87'],
+                    ['spotify:track:4NVKpvX9pcSeoKiNvjmb5X','100000','95'],
+                    ['spotify:track:6950ik0V6HCWgnLIFKe8FX','0','135'],
+                    ['spotify:track:3bTJRzsVHaL4JOmmNX4Cm3','3000','115'],
+                    ['spotify:track:6VR2wTjJGtlBnQztwVCbQM','0','240'],
+                    ['spotify:track:26TvTiU4H4OZ3bGvKmHA4L','0','92'],
+                    ['spotify:track:26vGXL80873wfoGhBGpFSn','22000','207'],
+                    ['spotify:track:7hUKxjrojKK6r4wiO3G9iU','0','220'],
+                    ['spotify:track:1jmuMJ77Of8WP8ljukJBGN','0','174']
+                            ]                                
+                ],
+
+                ['Workout', [
+                    ['spotify:track:27wbXcZKmqNV85Iz0SIJpI','0','98'],
+                    ['spotify:track:2TK7GCEHBhX0nKZXf6fBGQ','0','122'],
+                    ['spotify:track:52LL3IFB8N3PaJmoZ8Xii1','12000','122'],
+                    ['spotify:track:2tgooVPSQx14Od9xzz9Kc3','0','115'],
+                    ['spotify:track:5D1oPeuU4sGUwI5obM4bKZ','0','117'],
+                    ['spotify:track:2GZbJjsph5LKA0reVwefxH','0','80']
+                                ]
+                ],
+
+                ['Dummy #3', [
+                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
+                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
+                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
+                                ]
+                ],
+
+                ['Dummy #4', [
+                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
+                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
+                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
+                                ]
+                ],
+
+                ['Dummy #5', [
+                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
+                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
+                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
+                                ]
+                ],
+
+                ['Dummy #6', [
+                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
+                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
+                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
+                                ]
                 ]            
             ]
 
