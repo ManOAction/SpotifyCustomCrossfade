@@ -93,6 +93,40 @@ Playlists = [
 # Functions
 #################################################################################
 
+
+# Converting Strings to Base64 Encoding
+def GetDeviceID(token):
+    headers = {
+    'Accept' : 'application/json',
+    'Content-Type' : 'application/json',
+    'Authorization': f'Bearer {token}'
+        }
+
+    response = requests.get('https://api.spotify.com/v1/me/player/devices', headers=headers)
+
+    DeviceID = response.json()['devices']['id']
+    print(DeviceID)
+
+    return DeviceID
+
+
+# Converting Strings to Base64 Encoding
+def SetVolume(token, Volume):
+    print(f'Setting volume to {Volume}')
+    headers = {
+    'Accept' : 'application/json',
+    'Content-Type' : 'application/json',
+    'Authorization': f'Bearer {token}'
+        }
+    
+    url = f'https://api.spotify.com/v1/me/player/volume?volume_percent={Volume}'
+
+    response = requests.put(url=url, headers=headers)
+    print(response.status_code)
+
+    return True
+
+
 # Converting Strings to Base64 Encoding
 def strToBase64(StrToConvert):
     StrInBytes = StrToConvert.encode('ascii')

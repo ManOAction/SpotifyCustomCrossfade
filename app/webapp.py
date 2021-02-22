@@ -11,7 +11,7 @@ app.secret_key = 'nIe8c&Z*coP!DKm2gqZf' # Messing around with flash messaging.
 
 application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
-HostDomain = 'http://127.0.0.1:5000'
+HostDomain = 'http://www.crossfitcrossfader.com'
 
 # 'http://www.crossfitcrossfader.com'
 
@@ -22,41 +22,6 @@ HostDomain = 'http://127.0.0.1:5000'
 def index():
     
         return render_template('index.html', title='Crossfit Crossfader Home')
-
-
-def player(ListId):    
-
-    ListId -= 1    
-
-    flash(f'Player loop beginning for Playlist {CustomCrossfade.Playlists[ListId][0]}.')
-
-    render_template('crossfade.html', title='Crossfit Crossfader Home')   
-    
-
-    for Song in CustomCrossfade.Playlists[ListId][1]:
-        print('Adding a song to up next.')
-        session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-        CustomCrossfade.AddSongToQueue(Song[0], session.get('token', 'not set'))
-        print('Song Added')
-
-    print('Skipping to next song.')
-    session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-    CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))
-
-    for Song in CustomCrossfade.Playlists[ListId][1]:
-        if int(Song[1]) > 0:
-            print(f'Skipping to {Song[1]}')
-            session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-            CustomCrossfade.SeekToTime(Song[1], session.get('token', 'not set'))    
-        print(f'Sleeping for {Song[2]}')
-        CustomCrossfade.sleep(int(Song[2]))
-        session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-        CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))
-
-    print('Bottom of player function.')
-
-    return True
-
 
 
 # Playlist Maker Routes
@@ -90,7 +55,7 @@ def crossfade():
 def playlistplay(ListId):    
 
     @copy_current_request_context
-    def player(ListId):                          
+    def player(ListId):     
 
         for Song in CustomCrossfade.Playlists[ListId][1]:
             print('Adding a song to up next.')
@@ -102,15 +67,43 @@ def playlistplay(ListId):
         session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
         CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))
 
-        for Song in CustomCrossfade.Playlists[ListId][1]:
+        for Song in CustomCrossfade.Playlists[ListId][1]:            
             if int(Song[1]) > 0:
                 print(f'Skipping to {Song[1]}')
                 session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
                 CustomCrossfade.SeekToTime(Song[1], session.get('token', 'not set'))    
+            VolumeUp()
             print(f'Sleeping for {Song[2]}')
             CustomCrossfade.sleep(int(Song[2]))
             session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-            CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))        
+            VolumeDown()
+            CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))     
+            
+
+        return True
+
+    @copy_current_request_context
+    def VolumeDown():
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 70)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 60)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 50)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 40)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 30)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 20)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 10)
+        
+
+        return True
+
+    @copy_current_request_context
+    def VolumeUp():                        
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 20)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 30)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 40)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 50)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 60)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 70)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 80)
 
         return True
 
