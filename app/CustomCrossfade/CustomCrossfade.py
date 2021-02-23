@@ -21,72 +21,31 @@ clientSecret = config['ClientInfo']['clientSecret']
 
 # Playlist Key, Playlist Name, List of Songs [SpotifyURI, JustTo, Wait]
 Playlists = [
-                ['Garage Revival', [
-                    ['spotify:track:0YPDp1KIxVLTdh3vnvk6wd', '11000', '10'], 
-                    ['spotify:track:1JcGNoiwifg0MdJMVgJQYx', '0', '10'], 
-                    ['spotify:track:6tedQ1ZmbygqhbdcfJL7Xb', '9000', '5']
-                                        ]
-                ],
-
-                ['The Who Mix', [
-                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
-                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
-                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
-                                ]
-                ],
-
                 ['MetCon', [
-                    ['spotify:track:1JcGNoiwifg0MdJMVgJQYx','0','80'],
-                    ['spotify:track:0YPDp1KIxVLTdh3vnvk6wd','11000','105'],
-                    ['spotify:track:2VHfyWLlvCvbkIqtS5tqt3','8000','87'],
-                    ['spotify:track:4NVKpvX9pcSeoKiNvjmb5X','100000','95'],
-                    ['spotify:track:6950ik0V6HCWgnLIFKe8FX','0','135'],
-                    ['spotify:track:3bTJRzsVHaL4JOmmNX4Cm3','3000','115'],
-                    ['spotify:track:6VR2wTjJGtlBnQztwVCbQM','0','240'],
-                    ['spotify:track:26TvTiU4H4OZ3bGvKmHA4L','0','92'],
-                    ['spotify:track:26vGXL80873wfoGhBGpFSn','22000','207'],
-                    ['spotify:track:7hUKxjrojKK6r4wiO3G9iU','0','220'],
-                    ['spotify:track:1jmuMJ77Of8WP8ljukJBGN','0','174']
+                   ['spotify:track:6xxXrNJnnsQNLdgNk8S4y8','0','125'],
+                   ['spotify:track:1JcGNoiwifg0MdJMVgJQYx','0','81'],
+                   ['spotify:track:0YPDp1KIxVLTdh3vnvk6wd','11000','103'],
+                   ['spotify:track:2VHfyWLlvCvbkIqtS5tqt3','8000','77'],
+                   ['spotify:track:4NVKpvX9pcSeoKiNvjmb5X','100000','94'],
+                   ['spotify:track:6950ik0V6HCWgnLIFKe8FX','0','133'],
+                   ['spotify:track:3bTJRzsVHaL4JOmmNX4Cm3','3000','111'],
+                   ['spotify:track:6VR2wTjJGtlBnQztwVCbQM','0','227'],
+                   ['spotify:track:26TvTiU4H4OZ3bGvKmHA4L','0','91'],
+                   ['spotify:track:26vGXL80873wfoGhBGpFSn','22000','185']
                             ]                                
                 ],
 
                 ['Workout', [
-                    ['spotify:track:27wbXcZKmqNV85Iz0SIJpI','0','98'],
-                    ['spotify:track:2TK7GCEHBhX0nKZXf6fBGQ','0','122'],
-                    ['spotify:track:52LL3IFB8N3PaJmoZ8Xii1','12000','122'],
-                    ['spotify:track:2tgooVPSQx14Od9xzz9Kc3','0','115'],
-                    ['spotify:track:5D1oPeuU4sGUwI5obM4bKZ','0','117'],
-                    ['spotify:track:2GZbJjsph5LKA0reVwefxH','0','80']
+                   ['spotify:track:2TK7GCEHBhX0nKZXf6fBGQ','0','116'],
+                   ['spotify:track:52LL3IFB8N3PaJmoZ8Xii1','12000','108'],
+                   ['spotify:track:5D1oPeuU4sGUwI5obM4bKZ','0','114'],
+                   ['spotify:track:2GZbJjsph5LKA0reVwefxH','0','78'],
+                   ['spotify:track:3VuwZNTCD0ZNIl3GSnreLC','23000','143'],
+                   ['spotify:track:2tgooVPSQx14Od9xzz9Kc3','0','111'],
+                   ['spotify:track:7hUKxjrojKK6r4wiO3G9iU','0','194'],
+                   ['spotify:track:2j8W67NdrHhYRrCgdBCRMk','0','135']
                                 ]
-                ],
-
-                ['Dummy #3', [
-                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
-                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
-                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
-                                ]
-                ],
-
-                ['Dummy #4', [
-                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
-                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
-                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
-                                ]
-                ],
-
-                ['Dummy #5', [
-                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
-                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
-                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
-                                ]
-                ],
-
-                ['Dummy #6', [
-                    ['spotify:track:3qiyyUfYe7CRYLucrPmulD', '11000', '10'], 
-                    ['spotify:track:0LN5gIsS5tQSmRzQrHSaTR', '0', '10'], 
-                    ['spotify:track:23IJ5wLRhEZ9DOuia5mPiZ', '9000', '5']
-                                ]
-                ]            
+                ]
             ]
 
 
@@ -111,8 +70,7 @@ def GetDeviceID(token):
 
 
 # Converting Strings to Base64 Encoding
-def SetVolume(token, Volume):
-    print(f'Setting volume to {Volume}')
+def SetVolume(token, Volume):    
     headers = {
     'Accept' : 'application/json',
     'Content-Type' : 'application/json',

@@ -63,7 +63,7 @@ def playlistplay(ListId):
             CustomCrossfade.AddSongToQueue(Song[0], session.get('token', 'not set'))
             print('Song Added')
 
-        print('Skipping to next song.')
+        print('Beginning Playlist')
         session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
         CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))
 
@@ -84,6 +84,7 @@ def playlistplay(ListId):
 
     @copy_current_request_context
     def VolumeDown():
+        print('Dropping Volume.')
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 70)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 60)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 50)
@@ -96,7 +97,8 @@ def playlistplay(ListId):
         return True
 
     @copy_current_request_context
-    def VolumeUp():                        
+    def VolumeUp():    
+        print('Raising Volume.')                    
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 20)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 30)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 40)
