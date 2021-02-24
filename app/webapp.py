@@ -11,7 +11,7 @@ app.secret_key = 'nIe8c&Z*coP!DKm2gqZf' # Messing around with flash messaging.
 
 application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
-HostDomain = 'http://www.crossfitcrossfader.com'
+HostDomain = 'http://127.0.0.1:5000'
 
 global ThreadReset
 
@@ -32,8 +32,19 @@ def index():
 # Playlist Maker Routes
 ###########################################################################
 
-@app.route('/freqhits') # , methods=['GET', 'POST'])
+@app.route('/freqhits')
 def freqhits():
+
+    return render_template('freqhits.html', title='Frequency Hits Playlist Maker')
+
+
+@app.route('/freqhits/playlistmaker')
+def playlistmaker():
+
+    OldPlaylistID = CustomCrossfade.GetOldPlaylistID(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')))
+
+    if OldPlaylistID != None:
+        
 
     return render_template('freqhits.html', title='Frequency Hits Playlist Maker')
 
@@ -161,7 +172,7 @@ def playlistplay(ListId):
 def authorize():
     client_id = CustomCrossfade.clientId
     redirect_uri = f'{HostDomain}/crossfade/callback/'    
-    scope = 'user-read-private user-read-email user-modify-playback-state'
+    scope = 'user-read-private user-read-email user-modify-playback-state user-top-read playlist-read-private playlist-modify-public playlist-modify-private'
 
     authorize_url = 'https://accounts.spotify.com/en/authorize?'
     params = {'response_type': 'code', 'client_id': client_id,

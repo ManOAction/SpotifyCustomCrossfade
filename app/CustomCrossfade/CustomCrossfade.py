@@ -66,6 +66,38 @@ Playlists = [
 
 
 # Converting Strings to Base64 Encoding
+def GetOldPlaylistID(token):    
+
+    OldPlaylistID = None
+
+    headers = {
+    'Accept' : 'application/json',
+    'Content-Type' : 'application/json',
+    'Authorization': f'Bearer {token}'
+        }
+
+    params = (    
+    ('limit', '50'),
+    ('offset', '0'),
+            )
+    
+    url = 'https://api.spotify.com/v1/me/playlists'
+
+    response = requests.get(url=url, headers=headers, params=params)
+    print(response.status_code)
+    
+    parsed = json.loads(response.content)
+    print(json.dumps(parsed, indent=4, sort_keys=True))
+
+    for item in parsed['items']:
+        print(item['name'], ' ', item['id'])
+        if item['name'] == 'Old Underwear':
+            OldPlaylistID = item['id']
+
+    return OldPlaylistID
+
+
+# Converting Strings to Base64 Encoding
 def GetDeviceID(token):
     headers = {
     'Accept' : 'application/json',

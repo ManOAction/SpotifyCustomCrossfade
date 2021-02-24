@@ -51,14 +51,18 @@ A short and simple permissive license with conditions only requiring preservatio
 
 # Roadmap and Goals
 
-Multiple Playlists
+Add playlist maker
 
-Threaded or some version that doesn't use sleep()
+Clean up project structure (maybe rename to application for beanstalk)
+
+Add user created playlists?
 
 Bring Back CRUD to store user playlists (maybe loaded by csv)
 
 
 ## Done Recently
+2/21 - Threaded or some version that doesn't use sleep()
+2/20 - Multiple Playlists
 2/16 - Security update and session tokens
 2/16 - Unnecessary bootstrap facelift
 2/15 - Clean away CRUD portions (different branch?)
@@ -67,6 +71,8 @@ Bring Back CRUD to store user playlists (maybe loaded by csv)
 
 
 ## Diary and Misc Notes
+
+2/24 - Might finish the playlist maker and then put this down for a while.
 
 2/20/21 - Finally got threadded playing of playlists up and going.  Quick bootstrap skin.  Time to start working on multiple playlists and playlist uploading.
   We're using this for variable control in the href of the templates  
