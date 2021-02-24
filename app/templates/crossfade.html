@@ -8,7 +8,7 @@
       <div class="mx-auto text-center">
           <h1 class="mx-auto my-0 text-uppercase">Crossfit Crossfader</h1>
           <h2 class="text-white-50 mx-auto mt-2 mb-5">Make sure Spotify is already playing, then click authorize (you may be asked to login), then click a playlist to play.</h2>
-          <a class="btn btn-danger js-scroll-trigger" href="/crossfade/authorize">&nbsp;&nbsp;&nbsp;Authorize the App&nbsp;&nbsp;&nbsp;</a><br /><br />
+          <a class="btn btn-danger js-scroll-trigger" href="/crossfade/authorize">&nbsp;&nbsp;&nbsp;Authorize the App&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;<a class="btn btn-danger js-scroll-trigger" href="/crossfade/killplayer">Reset Player</a><br /><br />
           {% for playlist in playlists %}
           <a class="btn btn-primary js-scroll-trigger mb-2" href="{{ '/playlistplay/%s' %loop.index|urlencode }}">{{ playlist[0] }}</a>
           {% endfor %} 
