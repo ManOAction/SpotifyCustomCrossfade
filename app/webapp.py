@@ -11,7 +11,7 @@ app.secret_key = 'nIe8c&Z*coP!DKm2gqZf' # Messing around with flash messaging.
 
 application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
-HostDomain = 'http://127.0.0.1:5000'
+HostDomain = 'http://www.crossfitcrossfader.com'
 
 global ThreadReset
 
@@ -49,6 +49,8 @@ def flashtest():
 
 @app.route('/crossfade/killplayer')
 def killplayer():
+
+    global ThreadReset
     
     print(f'ThreadReset was {ThreadReset}')
     flash('Attempting to stop player.')
