@@ -45,7 +45,19 @@ Playlists = [
                    ['spotify:track:7hUKxjrojKK6r4wiO3G9iU','0','194'],
                    ['spotify:track:2j8W67NdrHhYRrCgdBCRMk','0','135']
                                 ]
-                ]
+                ] # ,
+
+                # ['Skipper', [
+                #    ['spotify:track:2TK7GCEHBhX0nKZXf6fBGQ','5000','10'],
+                #    ['spotify:track:52LL3IFB8N3PaJmoZ8Xii1','5000','10'],
+                #    ['spotify:track:5D1oPeuU4sGUwI5obM4bKZ','5000','10'],
+                #    ['spotify:track:2GZbJjsph5LKA0reVwefxH','5000','10'],
+                #    ['spotify:track:3VuwZNTCD0ZNIl3GSnreLC','5000','10'],
+                #    ['spotify:track:2tgooVPSQx14Od9xzz9Kc3','5000','10'],
+                #    ['spotify:track:7hUKxjrojKK6r4wiO3G9iU','5000','10'],
+                #    ['spotify:track:2j8W67NdrHhYRrCgdBCRMk','5000','10']
+                #                 ]
+                # ]
             ]
 
 
@@ -80,7 +92,8 @@ def SetVolume(token, Volume):
     url = f'https://api.spotify.com/v1/me/player/volume?volume_percent={Volume}'
 
     response = requests.put(url=url, headers=headers)
-    print(response.status_code)
+    # print(response.status_code)
+    print(f'Setting volume to {Volume}%.')
 
     return True
 

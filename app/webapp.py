@@ -11,9 +11,14 @@ app.secret_key = 'nIe8c&Z*coP!DKm2gqZf' # Messing around with flash messaging.
 
 application = app # For beanstalk, officially fucking stupid.  Never used elsewhere.
 
-HostDomain = 'http://www.crossfitcrossfader.com'
+HostDomain = 'http://127.0.0.1:5000'
+
+global ThreadReset
+
+ThreadReset = False
 
 # 'http://www.crossfitcrossfader.com'
+# 'http://127.0.0.1:5000'
 
 
 # Home Route
@@ -42,6 +47,16 @@ def flashtest():
 
     return redirect('/')
 
+@app.route('/crossfade/killplayer')
+def killplayer():
+    
+    print(f'ThreadReset was {ThreadReset}')
+    flash('Attempting to stop player.')
+    ThreadReset = True
+    CustomCrossfade.sleep(1)    
+    print(f'ThreadReset is now {ThreadReset}')
+
+    return redirect('/crossfade')
 
 @app.route('/crossfade')
 def crossfade():
@@ -55,44 +70,59 @@ def crossfade():
 def playlistplay(ListId):    
 
     @copy_current_request_context
-    def player(ListId):     
+    def player(ListId):    
 
+        global ThreadReset 
+
+        print(f'Beginning playlist {CustomCrossfade.Playlists[ListId][0]}')
+        
+        ThreadReset = False
+        SleepTime = 0        
+        
         for Song in CustomCrossfade.Playlists[ListId][1]:
-            print('Adding a song to up next.')
-            session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-            CustomCrossfade.AddSongToQueue(Song[0], session.get('token', 'not set'))
-            print('Song Added')
+            if ThreadReset == False:
 
-        print('Beginning Playlist')
-        session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-        CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))
+                SleepTime = int(Song[2])
 
-        for Song in CustomCrossfade.Playlists[ListId][1]:            
-            if int(Song[1]) > 0:
-                print(f'Skipping to {Song[1]}')
-                session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-                CustomCrossfade.SeekToTime(Song[1], session.get('token', 'not set'))    
-            VolumeUp()
-            print(f'Sleeping for {Song[2]}')
-            CustomCrossfade.sleep(int(Song[2]))
-            session['token'] = CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set'))
-            VolumeDown()
-            CustomCrossfade.SkipToNextSong(session.get('token', 'not set'))     
-            
+                VolumeDown()
+                
+                CustomCrossfade.AddSongToQueue(Song[0], CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')))
+                
+                CustomCrossfade.SkipToNextSong(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')))
+
+                if int(Song[1]) > 0:
+                    print(f'Skipping to {Song[1]}')                
+                    CustomCrossfade.SeekToTime(Song[1], CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')))
+
+                VolumeUp()
+
+                print(f'Sleeping for {SleepTime}')
+
+                SleepTime = SleepTime * 2
+
+                while ThreadReset == False and SleepTime > 0:
+                    CustomCrossfade.sleep(.5)
+                    SleepTime -= 1                
+        
+        print('Leaving Player Function.')
+
+        VolumeDown()
+        CustomCrossfade.SkipToNextSong(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')))
+        VolumeUp()
 
         return True
+
 
     @copy_current_request_context
     def VolumeDown():
         print('Dropping Volume.')
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 70)
-        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 60)
+        # CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 60)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 50)
-        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 40)
+        # CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 40)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 30)
-        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 20)
-        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 10)
-        
+        # CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 20)
+        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 10)        
 
         return True
 
@@ -100,11 +130,11 @@ def playlistplay(ListId):
     def VolumeUp():    
         print('Raising Volume.')                    
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 20)
-        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 30)
+        # CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 30)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 40)
-        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 50)
+        # CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 50)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 60)
-        CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 70)
+        # CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 70)
         CustomCrossfade.SetVolume(CustomCrossfade.GetNewAccessToken(session.get('refreshtoken', 'not set')), 80)
 
         return True
@@ -117,10 +147,10 @@ def playlistplay(ListId):
         flash('We need to get you authorized.')
         return redirect('/crossfade/authorize')  
 
-    ListId -= 1         
-
-    x = threading.Thread(target=player, args=(ListId,)) 
-    x.start() 
+    ListId -= 1 
+    
+    PlayerThread = threading.Thread(target=player, args=(ListId,)) 
+    PlayerThread.start() 
 
     return redirect('/crossfade')
 
